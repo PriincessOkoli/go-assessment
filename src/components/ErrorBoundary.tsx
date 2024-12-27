@@ -1,23 +1,8 @@
-import * as Sentry from '@sentry/react'
-import { ReactElement, ReactNode } from 'react'
-import ErrorFallback from './ErrorFallback'
+import * as Sentry from "@sentry/react";
+import ErrorFallback from "./ErrorFallback";
 
-type FallbackRender = (errorData: {
-  error: Error
-  componentStack: string | null
-  eventId: string | null
-  resetError(): void
-}) => ReactElement
-
-interface ErrorBoundaryProps {
-  fallback?: ReactElement | FallbackRender
-  onError?(error: Error, componentStack: string, eventId: string): void
-  onReset?(error: Error | null, componentStack: string | null, eventId: string | null): void
-  children: ReactNode
-}
-
-export default function ErrorBoundary(props: ErrorBoundaryProps) {
-  const { children, ...rest } = props
+export default function ErrorBoundary(props: Sentry.ErrorBoundaryProps) {
+  const { children, ...rest } = props;
 
   return (
     <Sentry.ErrorBoundary
@@ -25,7 +10,7 @@ export default function ErrorBoundary(props: ErrorBoundaryProps) {
         <div className="px-5">
           <ErrorFallback
             message="Something went wrong"
-            description="Oops! That wasn't supposed to happen. Please try again"
+            description="Oops! That wasn't supposed to happen. Please bear with us while this is resolved"
             reset={resetError}
             buttonText="Go back"
           />
@@ -35,5 +20,6 @@ export default function ErrorBoundary(props: ErrorBoundaryProps) {
     >
       {children}
     </Sentry.ErrorBoundary>
-  )
+  );
 }
+
